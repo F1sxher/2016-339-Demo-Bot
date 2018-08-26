@@ -79,6 +79,9 @@ public class WifiController extends Controller
 			{
 				e1.printStackTrace();
 			}
+		}
+		finally
+		{
 			this.thread();
 		}
 	}
