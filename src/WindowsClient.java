@@ -26,10 +26,8 @@ public class WindowsClient
 
 	public static void main(String[] args)
 	{
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		//Initialize the frame
 		JFrame frame = new JFrame();
-		Mat image = new Mat();
 
 		Dimension frameSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frameSize.setSize(frameSize.getWidth() / 2, frameSize.getHeight() / 2);
@@ -87,7 +85,7 @@ public class WindowsClient
 		Socket connection = null;
 		try
 		{
-			connection = new Socket("192.168.0.1", 6000);
+			connection = new Socket("10.21.41.49", 6000);
 			ObjectOutputStream oos = new ObjectOutputStream(connection.getOutputStream());
 			oos.flush();
 
@@ -109,7 +107,7 @@ public class WindowsClient
 				yval = 0;
 				zval = 0;
 
-				Thread.sleep(25);
+				Thread.sleep(50);
 			}
 
 
