@@ -10,7 +10,7 @@ to that of software.
 
 An album of hardware development can be found here:
 [https://photos.app.goo.gl/TmshhYfUhZ9ce68b7](https://photos.app.goo.gl/TmshhYfUhZ9ce68b7) <br />
-Everything except the mecanum wheels were hand modeled in Autodesk Inventor, special thanks to Jonah_Innoart on thingiverse
+Everything except the mecanum wheels was hand modeled in Autodesk Inventor, special thanks to Jonah_Innoart on thingiverse
 for modelling that. [https://www.thingiverse.com/thing:1358552](https://www.thingiverse.com/thing:1358552)
 <br />
 <br />
@@ -18,3 +18,7 @@ As for software development, the driver control became possible within a few mon
 which was then followed by wifi control connected to a laptop. A year later, the camera view was implemented.
 <br/>
 <br/>
+Programmed in Java, with the libraries Pi4J and JInput.
+
+## Plans for the Future
+Right now, a MiniMcGeeV2 is being designed in Inventor. This version 2 will use the Raspberry Pi Zero W and an AtTMega (for fine PWM and analog controls), as well as an onboard battery and charging circuit. The biggest change, however, will be in the drivetrain. This version will use a swerve drive type, allowing it more maneuverability over different terrains. The current progress is here: [https://photos.app.goo.gl/2zUikkyRRp2dGM538](https://photos.app.goo.gl/2zUikkyRRp2dGM538)
