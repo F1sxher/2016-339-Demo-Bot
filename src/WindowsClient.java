@@ -1,10 +1,5 @@
-import de.hardcode.jxinput.*;
-import de.hardcode.jxinput.directinput.DirectInputDevice;
 import net.java.games.input.Event;
 import net.java.games.input.Keyboard;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.highgui.HighGui;
 
 import javax.swing.*;
 import java.awt.*;
