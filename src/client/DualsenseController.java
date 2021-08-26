@@ -8,12 +8,13 @@ import net.java.games.input.ControllerEnvironment;
 		{"javadoc"})
 
 /**
- * The class that controls getting information from the Xbox Controller.
+ * The class that controls getting information from the Dualsense Controller.
  *
  * @author ryan
- *
+ * 
+ * Updated for Dualsense (Playstation 5) Controllers by Fisher
  */
-public class XboxController extends client.Controller
+public class DualsenseController extends client.Controller
 {
 
 
@@ -106,6 +107,5 @@ public class XboxController extends client.Controller
 	{
 		this.controller.poll();
 	}
-
 
 }

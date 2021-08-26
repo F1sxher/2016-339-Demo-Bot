@@ -19,6 +19,9 @@ public class WindowsClient
 
 	private static volatile boolean[] keypresses = new boolean[6];
 
+	private final static String robotIP = "192.168.1.1";
+	private final static int robotPort = 1234;
+
 	public static void main(String[] args)
 	{
 		//Initialize the frame
@@ -80,7 +83,7 @@ public class WindowsClient
 		Socket connection = null;
 		try
 		{
-			connection = new Socket("10.21.41.49", 6000);
+			connection = new Socket(robotIP, robotPort);
 			ObjectOutputStream oos = new ObjectOutputStream(connection.getOutputStream());
 			oos.flush();
 

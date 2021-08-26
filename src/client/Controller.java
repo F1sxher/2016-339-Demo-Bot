@@ -7,13 +7,17 @@ package client;
  */
 public abstract class Controller
 {
-
+	/**
+	 * TODO: Figure out if PS5 Dualsense is Supported at all
+	 * TODO: Figure out how to search for PS5 Controllers
+	 * TODO: Get Correct Byte Data of PS5 Buttons
+	 */
 	// BUTTONS
-	public static final byte XBOX = 0; // the XBOX button
-	public static final byte A = 1; // the A button
-	public static final byte B = 2; // the B button
-	public static final byte X = 3; // the X button
-	public static final byte Y = 4; // the Y button
+	public static final byte PS = 0; // the Playstation button
+	public static final byte TRIANGLE = 1; // the Triangle button
+	public static final byte CIRCLE = 2; // the Circle button
+	public static final byte CROSS = 3; // the Cross button
+	public static final byte SQUARE = 4; // the Square button
 	public static final byte LBUMP = 5; // the left bumper
 	public static final byte RBUMP = 6; // the right bumper
 	public static final byte BACK = 7; // the back button, left of the XBOX
@@ -32,6 +36,14 @@ public abstract class Controller
 	public static final byte RX_AXIS = 14; // the right stick X axis
 	public static final byte RY_AXIS = 15; // the right stick Y axis
 	public static final byte RTRIGGER = 16; // the right trigger axis
+	// ========
+
+	// CONTROLLER TYPES
+	public static enum controllerTypes
+	{
+		NotConfigured, DriverController, OperatorController
+	}
+	private static controllerTypes controllerType = controllerTypes.NotConfigured;
 	// ========
 
 	// DPAD
@@ -101,4 +113,41 @@ public abstract class Controller
 		return -255;
 	}
 
+	/**
+	 * Check wether or not the controller is configured.
+	 * @return Boolean value of whether or not the controller is configured
+	 */
+	public boolean isConfigured()
+	{
+		return controllerType != controllerTypes.NotConfigured;
+	}
+
+	/**
+	 * Check wether or not the controller is a Driver Controller
+	 * @return Boolean value of whether or not the controller is a Driver Controller
+	 */
+	public boolean isDriverController()
+	{
+		return controllerType == controllerTypes.DriverController;
+	}
+
+	/**
+	 * Check wether or not the controller is a Operator Controller
+	 * @return Boolean value of whether or not the controller is a Operator Controller
+	 */
+	public boolean isOperatorController()
+	{
+		return controllerType == controllerTypes.OperatorController;
+	}
+
+	/**
+	 * Set the controller type.
+	 * @param newControllerType - The controller type to set
+	 * @return The controller type that was set
+	 */
+	public controllerTypes setControllerType(controllerTypes newControllerType)
+	{
+		controllerType = newControllerType;
+		return controllerType;
+	}
 }

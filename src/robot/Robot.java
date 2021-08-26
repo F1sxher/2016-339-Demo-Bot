@@ -4,7 +4,7 @@ import com.pi4j.wiringpi.Gpio;
 
 import client.Controller;
 import client.WifiController;
-import client.XboxController;
+import client.DualsenseController;
 import hardware.MecanumTransmission;
 import hardware.MotorController;
 import hardware.Servo;
@@ -23,6 +23,8 @@ public class Robot
 	static final byte WIFI_BUTTON = 12;
 	static final byte BLUETOOTH_BUTTON = 13;
 
+	static final boolean OVERRIDE = false;
+
 	static boolean isUsingWifi = false;
 	static boolean isUsingBluetooth = false;
 
@@ -35,7 +37,8 @@ public class Robot
 
 	static MecanumTransmission transmission;
 
-	static Controller controller;
+	static Controller driveController;
+	static Controller operatorController;
 
 	/**
 	 * The main method of the robot.
@@ -98,15 +101,23 @@ public class Robot
 			{
 				Gpio.digitalWrite(GREEN_LED, false);
 				Gpio.digitalWrite(BLUE_LED, true);
-				controller = new WifiController();
+				driveController = new WifiController();
+				operatorController = new WifiController();
 				isUsingWifi = true;
 				break;
 			} else if (Gpio.digitalRead(BLUETOOTH_BUTTON) == 0)
 			{
 				Gpio.digitalWrite(BLUE_LED, false);
 				Gpio.digitalWrite(GREEN_LED, true);
-				controller = new XboxController();
-				((XboxController) controller).init();
+
+				// SETUP DRIVER CONTROLLER
+				driveController = new DualsenseController();
+				((DualsenseController) driveController).init();
+
+				// SETUP OPERATOR CONTROLLER
+				operatorController = new DualsenseController();
+				((DualsenseController) operatorController).init();
+
 				isUsingBluetooth = true;
 				break;
 			}
@@ -132,9 +143,32 @@ public class Robot
 	{
 		// ========LOOP========
 
+		// ========CHECK CONTROLLERS========
+		if (!OVERRIDE)
+		{
+			if (!driveController.isConfigured() || !operatorController.isConfigured())
+			{
+				System.out.println("WARNING! CHECK CONTROLLERS - ONE OR MORE ARE NOT CONFIGURED. THEY MUST BE CONFIGURED IN ORDER TO OPERATE. IGNORE THIS WARNING BY SETTING OVERRIDE TO 'TRUE'");
+				return true;
+			}
+
+			if (driveController.isDriverController() == operatorController.isDriverController())
+			{
+				System.out.println("WARNING! CHECK CONTROLLERS - BOTH CONTROLLERS ARE CONFIGURED TO BE DRIVER CONTROLLERS. THEY MUST BE CONFIGURED DIFFERENTLY IN ORDER TO OPERATE. IGNORE THIS WARNING BY SETTING OVERRIDE TO 'TRUE'");
+				return true;
+			}
+
+			if (driveController.isOperatorController() == operatorController.isOperatorController())
+			{
+				System.out.println("WARNING! CHECK CONTROLLERS - BOTH CONTROLLERS ARE CONFIGURED TO BE OPERATOR CONTROLLERS. THEY MUST BE CONFIGURED DIFFERENTLY IN ORDER TO OPERATE. IGNORE THIS WARNING BY SETTING OVERRIDE TO 'TRUE'");
+				return true;
+			}
+		}
+		// ========END CHECK CONTROLLERS========
+
 		// ========DRIVING FUNCTIONS========
-		transmission.drive(controller.getDirection(Controller.LSTICK), controller.getMagnitude(Controller.LSTICK),
-				controller.getAxis(Controller.RX_AXIS));
+		transmission.drive(driveController.getDirection(Controller.LSTICK), driveController.getMagnitude(Controller.LSTICK),
+				driveController.getAxis(Controller.RX_AXIS));
 
 		// ========END DRIVING FUNCTIONS========
 
